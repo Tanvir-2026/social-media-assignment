@@ -1,0 +1,21 @@
+[project]
+name = "social-media-backend"
+version = "0.1.0"
+description = "FastAPI social media backend (raw SQLite)"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi[standard]>=0.162.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-cov",
+]
+
+[tool.fastapi]
+entrypoint = "app.main:app"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
