@@ -26,6 +26,7 @@ def create_post(db: sqlite3.Connection, data: PostCreate, user_id: int) -> dict:
         "VALUES (?, ?, ?, ?, ?, ?)",
         (data.post_title, data.post_body, data.post_category, now, now, user_id),
     )
+    db.execute("UPDATE users SET post_count = post_count + 1 WHERE user_id = ?", (user_id,))
     db.commit()
     return _get_post_or_404(db, cur.lastrowid)
 
@@ -97,4 +98,5 @@ def delete_post(db: sqlite3.Connection, post_id: int, user_id: int) -> None:
     if post["user_id"] != user_id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not the author")
     db.execute("DELETE FROM posts WHERE post_id = ?", (post_id,))
+    db.execute("UPDATE users SET post_count = post_count - 1 WHERE user_id = ?", (user_id,))
     db.commit()

@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
     email     TEXT NOT NULL UNIQUE,
     phone     TEXT,
     address   TEXT,
-    access_id TEXT NOT NULL UNIQUE    -- secret random id, sent in X-Access-Id header
+    access_id TEXT NOT NULL UNIQUE,    -- secret random id, sent in X-Access-Id header
+    post_count INTEGER NOT NULL DEFAULT 0  --post counter 
 )
 """

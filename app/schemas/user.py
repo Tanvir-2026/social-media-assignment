@@ -27,3 +27,4 @@ class UserOut(BaseModel):
     phone: Optional[str] = None
     address: Optional[str] = None
     access_id: str
+    post_count: int

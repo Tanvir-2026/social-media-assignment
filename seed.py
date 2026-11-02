@@ -82,6 +82,10 @@ def main() -> None:
                 "VALUES (?, ?, ?, ?, ?, ?)",
                 (title, BODY, category, created.isoformat(), updated.isoformat(), random.choice(user_ids)),
             )
+            conn.execute(
+            "UPDATE users SET post_count = "
+            "(SELECT COUNT(*) FROM posts WHERE posts.user_id = users.user_id)"
+        )
         conn.commit()
 
         print(f"Created {len(USERS)} users and {post_count} posts.\n")

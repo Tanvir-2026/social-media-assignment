@@ -8,7 +8,7 @@ from fastapi.security import APIKeyHeader
 from app.database import get_db
 from app.schemas.user import UserCreate, UserLogin
 
-USER_COLUMNS = "user_id, username, name, email, phone, address, access_id"
+USER_COLUMNS = "user_id, username, name, email, phone, address, access_id, post_count"
 
 # Shows an "Authorize" button in /docs where you paste your access_id.
 api_key_header = APIKeyHeader(name="X-Access-Id", auto_error=False)

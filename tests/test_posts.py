@@ -100,3 +100,16 @@ def test_delete_own_post_then_fetch(client):
     post = make_post(client, user)
     assert client.delete(f"/posts/{post['post_id']}", headers=auth(user)).status_code == 204
     assert client.get(f"/posts/{post['post_id']}").status_code == 404
+
+def test_post_count_follows_create_and_delete(client):
+    user = make_user(client)
+    assert user["post_count"] == 0
+
+    first = make_post(client, user)
+    make_post(client, user)
+    login = client.post("/auth/login", json={"username": "alice", "password": "secret"})
+    assert login.json()["post_count"] == 2
+
+    client.delete(f"/posts/{first['post_id']}", headers=auth(user))
+    login = client.post("/auth/login", json={"username": "alice", "password": "secret"})
+    assert login.json()["post_count"] == 1
